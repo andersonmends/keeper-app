@@ -5,22 +5,17 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 
 function App() {
-  const [noteList, setNoteList] = useState([]);
+  const [notes, setNotes] = useState([]);
 
-  function addNote(noteTitle, noteText) {
-    // this.preventDefault();
-    const note = {
-      title: noteTitle,
-      text: noteText
-    };
-    setNoteList((prevNotes) => {
-      return [...prevNotes, note];
+  function addNote(newNote) {
+    setNotes((prevNotes) => {
+      return [...prevNotes, newNote];
     });
   }
 
   function deleteNote(id) {
-    setNoteList((prevNotes) => {
-      return prevNotes.filter((note, index) => {
+    setNotes((prevNotes) => {
+      return prevNotes.filter((noteItem, index) => {
         return index !== id;
       });
     });
@@ -30,19 +25,18 @@ function App() {
     <div>
       <Header />
       <CreateArea onAdd={addNote} />
-      <div>
-        {noteList.map((note, index) => (
+      {notes.map((noteItem, index) => {
+        return (
           <Note
             key={index}
             id={index}
-            title={note.title}
-            content={note.text}
+            title={noteItem.title}
+            content={noteItem.content}
             onDelete={deleteNote}
           />
-        ))}
-
-        <Footer />
-      </div>
+        );
+      })}
+      <Footer />
     </div>
   );
 }
